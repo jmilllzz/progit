@@ -6,6 +6,9 @@ float yMax=3;
 float tickSize=1;
 float h=0; 
 float k=0;
+import java.text.*;
+
+
 void setup() {
   size(521, 521);
 }
@@ -17,6 +20,22 @@ void draw() {
   h=cartesianX(mouseX);
   k=cartesianY(mouseY);
   drawParabola();
+
+  String instruction= "vertex follows the mouse";
+  text(instruction, 20, 20);
+  //draw equation
+  textSize(15);
+  String formula;
+  if (h>0) formula = "y=a(x-"+formatFloat(h)+")^2";
+  else formula="y=a(x"+formatFloat(h)+")^2";
+  if (k>0) formula +="+"+formatFloat(k);
+  else formula +=""+formatFloat(k);
+  text(formula, width/2- textWidth(formula)/2, height-20);
+}
+String formatFloat(float x) {
+  DecimalFormat myFormatter = new DecimalFormat("#.##");
+
+  return myFormatter.format(x);
 }
 float screenX(float x_) {
   return (x_-xMin)/(xMax-xMin)*width;
@@ -76,7 +95,7 @@ void drawParabola() {
     previousY=y_;
   }
 }
-float computeY(float x_){
+float computeY(float x_) {
   float a=1;
   return a*(x_-h)*(x_-h)+k;
 }
